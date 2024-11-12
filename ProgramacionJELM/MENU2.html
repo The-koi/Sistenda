@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menú Desplegable Colorido</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --color-primary: #2c3e50;
+            --color-secondary: #34495e;
+            --color-accent-blue: #3498db;
+            --color-accent-green: #2ecc71;
+            --color-accent-orange: #e67e22;
+            --color-accent-purple: #9b59b6;
+            --color-background: #ecf0f1;
+            --color-text: #ffffff;
+        }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Arial', sans-serif;
+            font-size: 16px;
+            line-height: 1.5;
+            color: #333;
+        }
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Blacker', sans-serif;
+        }
+        .main-header {
+            background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            position: relative;
+            z-index: 10;
+        }
+        .main-nav {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px;
+        }
+        .nav-menu {
+            display: flex;
+            list-style: none;
+        }
+        .nav-item {
+            position: relative;
+        }
+        .nav-link {
+            display: flex;
+            align-items: center;
+            color: var(--color-text);
+            text-decoration: none;
+            padding: 15px 20px;
+            position: relative;
+        }
+        .nav-link i {
+            margin-right: 8px;
+            font-size: 1.2em;
+        }
+        .nav-link:hover, .nav-link:focus {
+            background-color: rgba(255, 255, 255, 0.1);
+            transform: scale(1.05);
+        }
+        .submenu {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            min-width: 280px;
+            background-color: var(--color-secondary);
+            visibility: hidden;
+            opacity: 0;
+            transform: translateY(-10px);
+            z-index: 1000;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+            border-radius: 0 0 8px 8px;
+        }
+        .nav-item:hover > .submenu,
+        .nav-item:focus-within > .submenu {
+            visibility: visible;
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .submenu .nav-item {
+            width: 100%;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .submenu .nav-item:last-child {
+            border-bottom: none;
+        }
+        .submenu .nav-link {
+            padding: 12px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: var(--color-text);
+        }
+        .submenu .nav-link:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+        .nav-item:hover .submenu-trigger {
+            transform: rotate(180deg);
+        }
+        .service-blue { background-color: var(--color-accent-blue) !important; }
+        .service-green { background-color: var(--color-accent-green) !important; }
+        .service-orange { background-color: var(--color-accent-orange) !important; }
+        .service-purple { background-color: var(--color-accent-purple) !important; }
+        @media screen and (max-width: 992px) {
+            .nav-menu {
+                flex-direction: column;
+                position: fixed;
+                top: 0;
+                left: -300px;
+                width: 300px;
+                height: 100%;
+                background-color: var(--color-primary);
+                z-index: 2000;
+                overflow-y: auto;
+            }
+            .nav-menu.active {
+                left: 0;
+            }
+            .mobile-menu-toggle {
+                display: block;
+                color: var(--color-text);
+                background: none;
+                border: none;
+                font-size: 24px;
+                cursor: pointer;
+                z-index: 2001;
+                position: fixed;
+                top: 15px;
+                right: 15px;
+            }
+        }
+        .logo {
+            width: 70px;
+            height: auto;
+        }
+        #inicio {
+            min-height: calc(100vh - 60px);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            background: url('fondo.jpg.avif') no-repeat center center;
+            background-size: cover;
+            color: var(--color-primary);
+        }
+        .container {
+            background: rgba(255, 255, 255, 0.8);
+            padding: 40px;
+            border-radius: 8px;
+            text-align: center;
+            max-width: 600px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+        h1 {
+            font-size: 2.5em;
+            margin-bottom: 0.5em;
+        }
+        p {
+            color: #555;
+            font-size: 1.2em;
+            margin-bottom: 1.5em;
+        }
+        .images-container {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin-top: 20px;
+        }
+        .images-container img {
+            width: 100px;
+            height: 100px;
+            border-radius: 8px;
+            object-fit: cover;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+        }
+    </style>
+</head>
+<body>
+    <header class="main-header">
+        <nav class="main-nav">
+            <img src="logotipo.jpeg" alt="Logotipo de Jose Emmanuel Lopez Meza" class="logo">
+            <ul class="nav-menu">
+                <li class="nav-item">
+                    <a href="#" class="nav-link">
+                        <i class="fas fa-briefcase"></i> Ejercicios
+                        <i class="fas fa-chevron-down submenu-trigger"></i>
+                    </a>
+                    <ul class="submenu">
+                        <li class="nav-item">
+                            <a href="pagina1.php" class="nav-link service-blue">
+                                <i class="fas fa-user-circle"></i> Datos Personales
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="pagina3.php" class="nav-link service-green">
+                                <i class="fas fa-project-diagram"></i> Variables php
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="pagina5.php" class="nav-link service-orange">
+                                <i class="fas fa-handshake"></i> Almacen de Datos
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="nav-item">
+                    <a href="pagina2.php" class="nav-link">
+                        <i class="fas fa-envelope"></i> Contacto
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="formulario.html" class="nav-link">
+                        <i class="fas fa-envelope"></i> Formulario
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </header>
+    <section id="inicio">
+        <div class="container">
+            <h1>Bienvenido a Sistenda</h1>
+            <p>Un sistema diseñado especialmente para la gestión de tu tienda de abarrotes, simplificando las operaciones diarias y optimizando tus procesos.</p>
+            <div class="images-container">
+                <img src="productos.webp" alt="Productos de abarrotes">
+                <img src="estante.jpg" alt="Estante de tienda">
+                <img src="cajaproductos.jpg" alt="Cajas de productos">
+            </div>
+        </div>
+    </section>
+    <script>
+        function toggleMenu() {
+            const navMenu = document.querySelector('.nav-menu');
+            navMenu.classList.toggle('active');
+        }
+    </script>
+</body>
+</html>
